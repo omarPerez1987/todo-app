@@ -3,6 +3,7 @@ import { TaskModule } from './task/task.module';
 import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { env } from 'env.validation';
+import { SyncModule } from './synchronize/sync.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { env } from 'env.validation';
     }),
     DatabaseModule,
     TaskModule,
+    SyncModule,
   ],
 })
 export class AppModule {}

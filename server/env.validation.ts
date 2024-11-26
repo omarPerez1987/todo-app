@@ -9,5 +9,5 @@ export const envSchema = z.object({
 export const env = envSchema.parse({
   POSTGRESQL_USERNAME: process.env.POSTGRESQL_USERNAME,
   POSTGRESQL_PASSWORD: process.env.POSTGRESQL_PASSWORD,
-  POSTGRESQL_DATABASE: process.env.POSTGRESQL_DATABASEE,
+  POSTGRESQL_DATABASE: process.env.POSTGRESQL_DATABASE,
 });

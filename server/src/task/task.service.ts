@@ -21,9 +21,16 @@ export class TaskService {
     return task;
   }
 
-  async createTask(data: Prisma.TaskCreateInput): Promise<Task> {
+  async createTask(task: Prisma.TaskCreateInput): Promise<Task> {
     return this.prisma.task.create({
-      data,
+      data: {
+        id: task.id,
+        content: task.content,
+        isCompleted: task.isCompleted,
+        createdAt: task.createdAt || new Date(),
+        updatedAt: task.updatedAt || new Date(),
+        deletedAt: task.deletedAt || null,
+      },
     });
   }
 
@@ -31,20 +38,24 @@ export class TaskService {
     id: string;
     data: Prisma.TaskUpdateInput;
   }): Promise<Task> {
-    const { id, data } = params;
+    const { data, id } = params;
     return this.prisma.task.update({
-      data,
-      where: {
-        id,
+      where: { id },
+      data: {
+        content: data.content,
+        isCompleted: data.isCompleted,
+        updatedAt: new Date(),
+        deletedAt: data.deletedAt || null,
       },
     });
   }
 
   async deleteTask(id: string): Promise<void> {
-    await this.prisma.task.delete({
-      where: {
-        id,
-      },
+    if (!id) return;
+
+    await this.prisma.task.updateMany({
+      where: { id, deletedAt: null },
+      data: { deletedAt: new Date() },
     });
   }
 }
