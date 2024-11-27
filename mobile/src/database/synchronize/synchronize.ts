@@ -16,18 +16,21 @@ export async function mySync() {
       }
 
       const { changes, timestamp } = await response.json()
+      console.log('sincronizando')
       return { changes, timestamp }
     },
 
-
     pushChanges: async ({ changes, lastPulledAt }) => {
-      const response = await fetch(`${BASE_URL_API}/sync?last_pulled_at=${lastPulledAt}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json', 
+      const response = await fetch(
+        `${BASE_URL_API}/sync?last_pulled_at=${lastPulledAt}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(changes),
         },
-        body: JSON.stringify(changes),
-      })
+      )
       if (!response.ok) {
         throw new Error(await response.text())
       }

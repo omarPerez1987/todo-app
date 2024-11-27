@@ -1,3 +1,3 @@
 export default {
-    plugins: ["expo-asset"],
-};
+  plugins: ['expo-asset'],
+}
